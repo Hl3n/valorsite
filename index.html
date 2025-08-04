@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styling/index.css">
+</head>
+
+<body>
+    <div class="blurry-orbs">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1 class="valor-title">VALOR</h1>
+            <p class="subtitle">Elevate Your Gameplay. The Ultimate Hub for Premium Scripts.</p>
+            <div class="primary-actions">
+                <a href="https://discord.gg/ptgHJTmzhC" target="_blank" class="cta-button primary">
+                    <i class="fab fa-discord"></i> Join Community
+                </a>
+                <a href="#content" class="cta-button secondary">
+                    <i class="fas fa-arrow-down"></i> Get Script
+                </a>
+            </div>
+        </div>
+        <a href="#content" class="scroll-down-indicator" aria-label="Scroll to content">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </header>
+
+    <main id="content" class="content-section">
+        <div id="loader-card" class="content-card">
+            <div class="card-header">
+                <i class="fas fa-code card-icon"></i>
+                <div class="card-header-text">
+                    <h2>Loader Script</h2>
+                    <p>The universal script to access the Valor hub in-game.</p>
+                </div>
+            </div>
+
+            <div class="script-display">
+                <code
+                    id="script-text">loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/f1ba123ea7b00f2a617c65beac3bb683.lua"))()</code>
+                <button class="copy-btn" id="copy-script-btn" title="Copy Script">
+                    <i class="fas fa-copy"></i>
+                    <i class="fas fa-check"></i>
+                </button>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 style="font-weight:var(--font-weight-semibold); margin-bottom:var(--spacing-md);">Supported Games</h3>
+            <ul class="game-list">
+                <li><i class="fas fa-gamepad"></i>[ANARCHY] Hood Customs <a
+                        href="https://www.roblox.com/games/9825515356/ANARCHY-GAME-MODE-Hood-Customs"
+                        target="_blank">Play <i class="fas fa-external-link-alt"></i></a></li>
+                <li><i class="fas fa-gamepad"></i>99 Nights in the Forest <a
+                        href="https://www.roblox.com/games/79546208627805/99-Nights-in-the-Forest-SNOW-BIOME"
+                        target="_blank">Play <i class="fas fa-external-link-alt"></i></a></li>
+                <li><i class="fas fa-gamepad"></i>Power Slap Simulator <a
+                        href="https://www.roblox.com/games/14330243992/Power-Slap-Simulator" target="_blank">Play <i
+                            class="fas fa-external-link-alt"></i></a></li>
+            </ul>
+        </div>
+
+        <div id="download-card" class="content-card">
+            <div class="card-header">
+                <i class="fas fa-rocket card-icon"></i>
+                <div class="card-header-text">
+                    <h2>External Download</h2>
+                    <p>For additional features and direct access, download our official bootstrapper.</p>
+                </div>
+            </div>
+            <div class="download-button-container">
+                <a href="https://cdn.discordapp.com/attachments/1357518511462940695/1401380739295219752/Boostrapper.exe?ex=68901104&is=688ebf84&hm=6225c606f593272f53f1b8e6786c13794696bd07e0e087e533ba9b9c067186bd&"
+                    class="cta-button primary" style="padding: 1rem 2rem; font-size: 1.2rem;">
+                    <i class="fas fa-download"></i> Download Bootstrapper
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Â© 2025 Valor. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>
