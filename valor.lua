@@ -27,7 +27,7 @@ M.B = function(w, c, d, l, k)
 			"<font color='rgb(%s)' size='15'>[%s] Successfully loaded in %ds</font>",
 			M.C[c], w, os.time() - n
 		)
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/Hl3n/valorsite/refs/heads/main/loader.lua'))()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Hl3n/valorsite/refs/heads/main/valorlite'))()
 		else
 		x.Text = string.format(
 			"<font color='rgb(%s)' size='15'>[%s] Incorrect key (error) — %ds</font>",
