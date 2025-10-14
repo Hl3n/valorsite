@@ -47,6 +47,7 @@ Converted["_title"].Font = Enum.Font.RobotoMono
 Converted["_title"].Text = "notification title"
 Converted["_title"].TextColor3 = Color3.fromRGB(195, 195, 195)
 Converted["_title"].TextSize = 18
+Converted["_title"].RichText = true
 Converted["_title"].TextXAlignment = Enum.TextXAlignment.Left
 Converted["_title"].BackgroundTransparency = 1
 Converted["_title"].Position = UDim2.new(0, 0, 0.05, 0)
@@ -64,6 +65,7 @@ Converted["_bar1"].Parent = Converted["_Frame2"]
 
 Converted["_text"].Font = Enum.Font.RobotoMono
 Converted["_text"].Text = "you have enabled sniper db"
+Converted["_text"].RichText = true
 Converted["_text"].TextColor3 = Color3.fromRGB(195, 195, 195)
 Converted["_text"].TextSize = 16
 Converted["_text"].TextXAlignment = Enum.TextXAlignment.Left
