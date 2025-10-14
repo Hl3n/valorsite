@@ -114,3 +114,4 @@ local function Notify(duration, title, description)
 		Converted["_Frame"].Visible = false
 	end)
 end
+return Notify
