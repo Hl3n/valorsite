@@ -25,7 +25,6 @@ Converted["_Frame"].Position = UDim2.new(0.5, 0, 0.9, 0)
 Converted["_Frame"].Size = UDim2.new(0, 300, 0, 75)
 Converted["_Frame"].Visible = false
 Converted["_Frame"].Parent = Converted["_getvalorxyznotification"]
-
 Converted["_UICorner"].Parent = Converted["_Frame"]
 
 Converted["_Frame1"].AnchorPoint = Vector2.new(0.5, 0.5)
@@ -80,12 +79,14 @@ Converted["_UIStroke"].Color = Color3.fromRGB(35, 35, 35)
 Converted["_UIStroke"].Parent = Converted["_Frame"]
 
 local TweenService = game:GetService("TweenService")
+local busy = false
 
-local function Notify(duration, title, description)
+local function Notify(a, duration, title, description)
+	if busy then return end
+	busy = true
 	duration = duration or 3
 	Converted["_title"].Text = title or "Notification"
 	Converted["_text"].Text = description or ""
-
 	Converted["_Frame"].Visible = true
 	Converted["_Frame"].Size = UDim2.new(0, 10, 0, 10)
 	Converted["_Frame"].BackgroundTransparency = 1
@@ -95,35 +96,43 @@ local function Notify(duration, title, description)
 	Converted["_text"].TextTransparency = 1
 	Converted["_bar1"].BackgroundTransparency = 1
 
-	local grow = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+	local grow = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 		Size = UDim2.new(0, 340, 0, 90),
 		BackgroundTransparency = 0
 	})
-	local settle = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.15, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
+	local settle = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.16, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
 		Size = UDim2.new(0, 300, 0, 75)
 	})
-
 	grow:Play()
 	grow.Completed:Wait()
 	settle:Play()
+	TweenService:Create(Converted["_Frame1"], TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+	TweenService:Create(Converted["_Frame2"], TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+	TweenService:Create(Converted["_title"], TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
+	TweenService:Create(Converted["_text"], TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
+	TweenService:Create(Converted["_bar1"], TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
 
-	TweenService:Create(Converted["_Frame1"], TweenInfo.new(0.25), { BackgroundTransparency = 0 }):Play()
-	TweenService:Create(Converted["_Frame2"], TweenInfo.new(0.25), { BackgroundTransparency = 0 }):Play()
-	TweenService:Create(Converted["_title"], TweenInfo.new(0.25), { TextTransparency = 0 }):Play()
-	TweenService:Create(Converted["_text"], TweenInfo.new(0.25), { TextTransparency = 0 }):Play()
-	TweenService:Create(Converted["_bar1"], TweenInfo.new(0.25), { BackgroundTransparency = 0 }):Play()
+	task.wait(duration)
 
-	task.delay(duration, function()
-		local fadeOut = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-			Size = UDim2.new(0, 0, 0, 0),
-			BackgroundTransparency = 1
-		})
-		TweenService:Create(Converted["_text"], TweenInfo.new(0.2), { TextTransparency = 1 }):Play()
-		TweenService:Create(Converted["_title"], TweenInfo.new(0.2), { TextTransparency = 1 }):Play()
-		fadeOut:Play()
-		fadeOut.Completed:Wait()
-		Converted["_Frame"].Visible = false
-	end)
+	local fadeFrame = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		Size = UDim2.new(0, 0, 0, 0),
+		BackgroundTransparency = 1
+	})
+	local fadeFrame1 = TweenService:Create(Converted["_Frame1"], TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
+	local fadeFrame2 = TweenService:Create(Converted["_Frame2"], TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
+	local fadeBar = TweenService:Create(Converted["_bar1"], TweenInfo.new(0.25), { BackgroundTransparency = 1 })
+	local fadeTitle = TweenService:Create(Converted["_title"], TweenInfo.new(0.2), { TextTransparency = 1 })
+	local fadeText = TweenService:Create(Converted["_text"], TweenInfo.new(0.2), { TextTransparency = 1 })
+
+	fadeFrame1:Play()
+	fadeFrame2:Play()
+	fadeBar:Play()
+	fadeTitle:Play()
+	fadeText:Play()
+	fadeFrame:Play()
+	fadeFrame.Completed:Wait()
+	Converted["_Frame"].Visible = false
+	busy = false
 end
 
 return {
