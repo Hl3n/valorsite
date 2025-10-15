@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/valor", "destination": "/redirects/valor.lua" }
+    { "source": "/valor", "destination": "/redirects/valor.lua" },
     { "source": "/wm", "destination": "/redirects/wm.lua" }
   ]
 }
