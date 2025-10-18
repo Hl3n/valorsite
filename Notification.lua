@@ -84,8 +84,6 @@ local TweenService = game:GetService("TweenService")
 local busy = false
 
 local function Notify(a, duration, title, description)
-	if busy then return end
-	busy = true
 	duration = duration or 3
 	Converted["_title"].Text = title or "Notification"
 	Converted["_text"].Text = description or ""
@@ -134,9 +132,7 @@ local function Notify(a, duration, title, description)
 	fadeFrame:Play()
 	fadeFrame.Completed:Wait()
 	Converted["_Frame"].Visible = false
-	busy = false
 end
-
 return {
 	Notify = Notify
 }
