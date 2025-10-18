@@ -1,5 +1,6 @@
 local Converted = {
 	["_getvalorxyznotification"] = Instance.new("ScreenGui"),
+	["_Container"] = Instance.new("Frame"),
 	["_Frame"] = Instance.new("Frame"),
 	["_UICorner"] = Instance.new("UICorner"),
 	["_Frame1"] = Instance.new("Frame"),
@@ -12,35 +13,47 @@ local Converted = {
 	["_text"] = Instance.new("TextLabel"),
 	["_UIPadding1"] = Instance.new("UIPadding"),
 	["_UIStroke"] = Instance.new("UIStroke"),
+	["_UIListLayout"] = Instance.new("UIListLayout")
 }
 
 Converted["_getvalorxyznotification"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Converted["_getvalorxyznotification"].Name = "getvalorxyznotification"
 Converted["_getvalorxyznotification"].Parent = game:GetService("CoreGui")
 
+Converted["_Container"].BackgroundTransparency = 1
+Converted["_Container"].Position = UDim2.new(0.4148, 0, 0.00694, 0)
+Converted["_Container"].Size = UDim2.new(0.17, 0, 0.9, 0)
+Converted["_Container"].Parent = Converted["_getvalorxyznotification"]
+
+Converted["_UIListLayout"].Padding = UDim.new(0.01, 0)
+Converted["_UIListLayout"].HorizontalAlignment = Enum.HorizontalAlignment.Center
+Converted["_UIListLayout"].SortOrder = Enum.SortOrder.LayoutOrder
+Converted["_UIListLayout"].VerticalAlignment = Enum.VerticalAlignment.Bottom
+Converted["_UIListLayout"].Parent = Converted["_Container"]
+
 Converted["_Frame"].AnchorPoint = Vector2.new(0.5, 0.9)
 Converted["_Frame"].BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Converted["_Frame"].BorderSizePixel = 0
 Converted["_Frame"].Position = UDim2.new(0.5, 0, 0.9, 0)
 Converted["_Frame"].Size = UDim2.new(0, 300, 0, 75)
 Converted["_Frame"].Visible = false
-Converted["_Frame"].Parent = Converted["_getvalorxyznotification"]
+Converted["_Frame"].Parent = Converted["_Container"]
+
 Converted["_UICorner"].Parent = Converted["_Frame"]
 
 Converted["_Frame1"].AnchorPoint = Vector2.new(0.5, 0.5)
 Converted["_Frame1"].BackgroundColor3 = Color3.fromRGB(53, 74, 109)
-Converted["_Frame1"].BorderSizePixel = 0
 Converted["_Frame1"].Position = UDim2.new(0.5, 0, 0.5, 0)
 Converted["_Frame1"].Size = UDim2.new(1, -2, 1, -2)
 Converted["_Frame1"].Parent = Converted["_Frame"]
+
 Converted["_UICorner1"].Parent = Converted["_Frame1"]
 
 Converted["_Frame2"].AnchorPoint = Vector2.new(0.5, 0.5)
 Converted["_Frame2"].BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Converted["_Frame2"].BorderSizePixel = 0
 Converted["_Frame2"].Position = UDim2.new(0.5, 0, 0.5, 0)
 Converted["_Frame2"].Size = UDim2.new(1, -2, 1, -2)
 Converted["_Frame2"].Parent = Converted["_Frame1"]
+
 Converted["_UICorner2"].Parent = Converted["_Frame2"]
 
 Converted["_title"].Font = Enum.Font.RobotoMono
@@ -52,8 +65,10 @@ Converted["_title"].TextXAlignment = Enum.TextXAlignment.Left
 Converted["_title"].BackgroundTransparency = 1
 Converted["_title"].Position = UDim2.new(0, 0, 0.05, 0)
 Converted["_title"].Size = UDim2.new(1, -10, 0.3, 0)
+Converted["_title"].Name = "Title"
 Converted["_title"].Parent = Converted["_Frame2"]
-Converted["_UIPadding"].PaddingLeft = UDim.new(0, 6)
+
+Converted["_UIPadding"].PaddingLeft = UDim.new(0, 4)
 Converted["_UIPadding"].Parent = Converted["_title"]
 
 Converted["_bar1"].AnchorPoint = Vector2.new(0.5, 0.35)
@@ -62,6 +77,7 @@ Converted["_bar1"].BorderSizePixel = 0
 Converted["_bar1"].Position = UDim2.new(0.5, 0, 0.38, 0)
 Converted["_bar1"].Size = UDim2.new(1, -12, 0, 1)
 Converted["_bar1"].Parent = Converted["_Frame2"]
+
 
 Converted["_text"].Font = Enum.Font.RobotoMono
 Converted["_text"].Text = "you have enabled sniper db"
@@ -73,65 +89,67 @@ Converted["_text"].TextYAlignment = Enum.TextYAlignment.Top
 Converted["_text"].BackgroundTransparency = 1
 Converted["_text"].Position = UDim2.new(0, 0, 0.45, 0)
 Converted["_text"].Size = UDim2.new(1, -10, 0.5, -10)
+Converted["_text"].Name = "Desc"
 Converted["_text"].Parent = Converted["_Frame2"]
-Converted["_UIPadding1"].PaddingLeft = UDim.new(0, 6)
+
+Converted["_UIPadding1"].PaddingLeft = UDim.new(0, 4)
 Converted["_UIPadding1"].Parent = Converted["_text"]
 
 Converted["_UIStroke"].Color = Color3.fromRGB(35, 35, 35)
 Converted["_UIStroke"].Parent = Converted["_Frame"]
 
 local TweenService = game:GetService("TweenService")
-local busy = false
 
-local function Notify(a, duration, title, description)
-	duration = duration or 3
-	Converted["_title"].Text = title or "Notification"
-	Converted["_text"].Text = description or ""
-	Converted["_Frame"].Visible = true
-	Converted["_Frame"].Size = UDim2.new(0, 10, 0, 10)
-	Converted["_Frame"].BackgroundTransparency = 1
-	Converted["_Frame1"].BackgroundTransparency = 1
-	Converted["_Frame2"].BackgroundTransparency = 1
-	Converted["_title"].TextTransparency = 1
-	Converted["_text"].TextTransparency = 1
-	Converted["_bar1"].BackgroundTransparency = 1
+local function Notify(_, duration, title, description)
+	task.spawn(function()
+		duration = duration or 3
+		local Clone = Converted["_Frame"]:Clone()
+		Clone.Visible = true
+		Clone.Parent = Converted["_Container"]
 
-	local grow = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-		Size = UDim2.new(0, 340, 0, 90),
-		BackgroundTransparency = 0
-	})
-	local settle = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.16, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
-		Size = UDim2.new(0, 300, 0, 75)
-	})
-	grow:Play()
-	grow.Completed:Wait()
-	settle:Play()
-	TweenService:Create(Converted["_Frame1"], TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
-	TweenService:Create(Converted["_Frame2"], TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
-	TweenService:Create(Converted["_title"], TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
-	TweenService:Create(Converted["_text"], TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
-	TweenService:Create(Converted["_bar1"], TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+		local Frame = Clone
+		local Frame1 = Frame:FindFirstChildOfClass("Frame")
+		local Frame2 = Frame1:FindFirstChildOfClass("Frame")
+		local Title = Frame2:FindFirstChild("Title")
+		local Text = Frame2:FindFirstChild("Desc")
+		local Bar = Frame2:FindFirstChildWhichIsA("Frame", true)
 
-	task.wait(duration)
+		Title.Text = title or "Notification"
+		Text.Text = description or ""
 
-	local fadeFrame = TweenService:Create(Converted["_Frame"], TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-		Size = UDim2.new(0, 0, 0, 0),
-		BackgroundTransparency = 1
-	})
-	local fadeFrame1 = TweenService:Create(Converted["_Frame1"], TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
-	local fadeFrame2 = TweenService:Create(Converted["_Frame2"], TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1 })
-	local fadeBar = TweenService:Create(Converted["_bar1"], TweenInfo.new(0.25), { BackgroundTransparency = 1 })
-	local fadeTitle = TweenService:Create(Converted["_title"], TweenInfo.new(0.2), { TextTransparency = 1 })
-	local fadeText = TweenService:Create(Converted["_text"], TweenInfo.new(0.2), { TextTransparency = 1 })
+		Frame.Size = UDim2.new(0, 10, 0, 10)
+		for _, v in pairs({ Frame, Frame1, Frame2, Title, Text, Bar }) do
+			if v:IsA("GuiObject") then
+				v.BackgroundTransparency = 1
+			elseif v:IsA("TextLabel") then
+				v.TextTransparency = 1
+			end
+		end
 
-	fadeFrame1:Play()
-	fadeFrame2:Play()
-	fadeBar:Play()
-	fadeTitle:Play()
-	fadeText:Play()
-	fadeFrame:Play()
-	fadeFrame.Completed:Wait()
-	Converted["_Frame"].Visible = false
+		local grow = TweenService:Create(Frame, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0, 340, 0, 90), BackgroundTransparency = 0 })
+		local settle = TweenService:Create(Frame, TweenInfo.new(0.16, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { Size = UDim2.new(0, 300, 0, 75) })
+		grow:Play()
+		grow.Completed:Wait()
+		settle:Play()
+
+		TweenService:Create(Frame1, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+		TweenService:Create(Frame2, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+		TweenService:Create(Title, TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
+		TweenService:Create(Text, TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
+		TweenService:Create(Bar, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+
+		task.wait(duration)
+
+		local fadeFrame = TweenService:Create(Frame, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Size = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 1 })
+		for _, tweenTarget in pairs({ Frame1, Frame2, Bar }) do
+			TweenService:Create(tweenTarget, TweenInfo.new(0.25), { BackgroundTransparency = 1 }):Play()
+		end
+		TweenService:Create(Title, TweenInfo.new(0.2), { TextTransparency = 1 }):Play()
+		TweenService:Create(Text, TweenInfo.new(0.2), { TextTransparency = 1 }):Play()
+		fadeFrame:Play()
+		fadeFrame.Completed:Wait()
+		Clone:Destroy()
+	end)
 end
 return {
 	Notify = Notify
