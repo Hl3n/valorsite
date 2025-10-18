@@ -57,6 +57,7 @@ Converted["_Frame2"].Parent = Converted["_Frame1"]
 Converted["_UICorner2"].Parent = Converted["_Frame2"]
 
 Converted["_title"].Font = Enum.Font.RobotoMono
+Converted["_title"].AnchorPoint = Vector2.new(0.5, 0)
 Converted["_title"].Text = "notification title"
 Converted["_title"].TextColor3 = Color3.fromRGB(195, 195, 195)
 Converted["_title"].TextSize = 18
@@ -78,7 +79,7 @@ Converted["_bar1"].Position = UDim2.new(0.5, 0, 0, 0)
 Converted["_bar1"].Size = UDim2.new(1, -4, 0.3, 0)
 Converted["_bar1"].Parent = Converted["_Frame2"]
 
-
+Converted["_title"].AnchorPoint = Vector2.new(0.5, 0.95)
 Converted["_text"].Font = Enum.Font.RobotoMono
 Converted["_text"].Text = "you have enabled sniper db"
 Converted["_text"].RichText = true
