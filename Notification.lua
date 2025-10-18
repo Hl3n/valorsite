@@ -90,6 +90,7 @@ Converted["_text"].BackgroundTransparency = 1
 Converted["_text"].Position = UDim2.new(0, 0, 0.45, 0)
 Converted["_text"].Size = UDim2.new(1, -10, 0.5, -10)
 Converted["_text"].Name = "Desc"
+Converted["_text"].TextWrapped = true
 Converted["_text"].Parent = Converted["_Frame2"]
 
 Converted["_UIPadding1"].PaddingLeft = UDim.new(0, 4)
