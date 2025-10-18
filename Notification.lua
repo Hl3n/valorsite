@@ -56,6 +56,8 @@ Converted["_Frame2"].Parent = Converted["_Frame1"]
 
 Converted["_UICorner2"].Parent = Converted["_Frame2"]
 
+-- Title (left aligned properly)
+Converted["_title"].Name = "Title"
 Converted["_title"].Font = Enum.Font.RobotoMono
 Converted["_title"].Text = "notification title"
 Converted["_title"].TextColor3 = Color3.fromRGB(195, 195, 195)
@@ -63,12 +65,13 @@ Converted["_title"].TextSize = 18
 Converted["_title"].RichText = true
 Converted["_title"].TextXAlignment = Enum.TextXAlignment.Left
 Converted["_title"].BackgroundTransparency = 1
-Converted["_title"].Position = UDim2.new(0, 0, 0.05, 0)
-Converted["_title"].Size = UDim2.new(1, -10, 0.3, 0)
-Converted["_title"].Name = "Title"
+-- Use top-left anchor so position X/Y are left/top offsets
+Converted["_title"].AnchorPoint = Vector2.new(0, 0)
+Converted["_title"].Position = UDim2.new(0, 8, 0.05, 0) -- left padding of 8
+Converted["_title"].Size = UDim2.new(1, -16, 0.3, 0)   -- account for both-side padding
 Converted["_title"].Parent = Converted["_Frame2"]
 
-Converted["_UIPadding"].PaddingLeft = UDim.new(0, 4)
+Converted["_UIPadding"].PaddingLeft = UDim.new(0, 0)
 Converted["_UIPadding"].Parent = Converted["_title"]
 
 Converted["_bar1"].AnchorPoint = Vector2.new(0.5, 0.35)
@@ -78,7 +81,8 @@ Converted["_bar1"].Position = UDim2.new(0.5, 0, 0.38, 0)
 Converted["_bar1"].Size = UDim2.new(1, -12, 0, 1)
 Converted["_bar1"].Parent = Converted["_Frame2"]
 
-
+-- Description (left aligned to match title)
+Converted["_text"].Name = "Desc"
 Converted["_text"].Font = Enum.Font.RobotoMono
 Converted["_text"].Text = "you have enabled sniper db"
 Converted["_text"].RichText = true
@@ -87,13 +91,13 @@ Converted["_text"].TextSize = 16
 Converted["_text"].TextXAlignment = Enum.TextXAlignment.Left
 Converted["_text"].TextYAlignment = Enum.TextYAlignment.Top
 Converted["_text"].BackgroundTransparency = 1
-Converted["_text"].Position = UDim2.new(0, 0, 0.45, 0)
-Converted["_text"].Size = UDim2.new(1, -10, 0.5, -10)
-Converted["_text"].Name = "Desc"
+Converted["_text"].AnchorPoint = Vector2.new(0, 0)
+Converted["_text"].Position = UDim2.new(0, 8, 0.45, 0) -- same left padding
+Converted["_text"].Size = UDim2.new(1, -16, 0.5, -10)
 Converted["_text"].TextWrapped = true
 Converted["_text"].Parent = Converted["_Frame2"]
 
-Converted["_UIPadding1"].PaddingLeft = UDim.new(0, 4)
+Converted["_UIPadding1"].PaddingLeft = UDim.new(0, 0)
 Converted["_UIPadding1"].Parent = Converted["_text"]
 
 Converted["_UIStroke"].Color = Color3.fromRGB(35, 35, 35)
@@ -110,22 +114,28 @@ local function Notify(_, duration, title, description)
 
 		local Frame = Clone
 		local Frame1 = Frame:FindFirstChildOfClass("Frame")
-		local Frame2 = Frame1:FindFirstChildOfClass("Frame")
-		local Title = Frame2:FindFirstChild("Title")
-		local Text = Frame2:FindFirstChild("Desc")
-		local Bar = Frame2:FindFirstChildWhichIsA("Frame", true)
+		local Frame2 = Frame1 and Frame1:FindFirstChildOfClass("Frame")
+		local Title = Frame2 and Frame2:FindFirstChild("Title")
+		local Text = Frame2 and Frame2:FindFirstChild("Desc")
+		local Bar = Frame2 and Frame2:FindFirstChild("bar1")
 
-		Title.Text = title or "Notification"
-		Text.Text = description or ""
+		-- Fallbacks to ensure no nil errors
+		Title = Title or Frame:FindFirstChildWhichIsA("TextLabel")
+		Text = Text or Frame:FindFirstChildWhichIsA("TextLabel", true)
 
-		Frame.Size = UDim2.new(0, 10, 0, 10)
-		for _, v in pairs({ Frame, Frame1, Frame2, Title, Text, Bar }) do
-			if v:IsA("GuiObject") then
-				v.BackgroundTransparency = 1
-			elseif v:IsA("TextLabel") then
-				v.TextTransparency = 1
-			end
+		if Title and Text then
+			Title.Text = title or "Notification"
+			Text.Text = description or ""
 		end
+
+		-- initialize alpha/size
+		Frame.Size = UDim2.new(0, 10, 0, 10)
+		if Frame.BackgroundTransparency then Frame.BackgroundTransparency = 1 end
+		if Frame1 and Frame1.BackgroundTransparency then Frame1.BackgroundTransparency = 1 end
+		if Frame2 and Frame2.BackgroundTransparency then Frame2.BackgroundTransparency = 1 end
+		if Bar and Bar.BackgroundTransparency then Bar.BackgroundTransparency = 1 end
+		if Title and Title.TextTransparency then Title.TextTransparency = 1 end
+		if Text and Text.TextTransparency then Text.TextTransparency = 1 end
 
 		local grow = TweenService:Create(Frame, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0, 340, 0, 90), BackgroundTransparency = 0 })
 		local settle = TweenService:Create(Frame, TweenInfo.new(0.16, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { Size = UDim2.new(0, 300, 0, 75) })
@@ -133,25 +143,26 @@ local function Notify(_, duration, title, description)
 		grow.Completed:Wait()
 		settle:Play()
 
-		TweenService:Create(Frame1, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
-		TweenService:Create(Frame2, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
-		TweenService:Create(Title, TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
-		TweenService:Create(Text, TweenInfo.new(0.22), { TextTransparency = 0 }):Play()
-		TweenService:Create(Bar, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play()
+		if Frame1 then TweenService:Create(Frame1, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play() end
+		if Frame2 then TweenService:Create(Frame2, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play() end
+		if Title then TweenService:Create(Title, TweenInfo.new(0.22), { TextTransparency = 0 }):Play() end
+		if Text then TweenService:Create(Text, TweenInfo.new(0.22), { TextTransparency = 0 }):Play() end
+		if Bar then TweenService:Create(Bar, TweenInfo.new(0.22), { BackgroundTransparency = 0 }):Play() end
 
 		task.wait(duration)
 
 		local fadeFrame = TweenService:Create(Frame, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Size = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 1 })
-		for _, tweenTarget in pairs({ Frame1, Frame2, Bar }) do
-			TweenService:Create(tweenTarget, TweenInfo.new(0.25), { BackgroundTransparency = 1 }):Play()
-		end
-		TweenService:Create(Title, TweenInfo.new(0.2), { TextTransparency = 1 }):Play()
-		TweenService:Create(Text, TweenInfo.new(0.2), { TextTransparency = 1 }):Play()
+		if Frame1 then TweenService:Create(Frame1, TweenInfo.new(0.25), { BackgroundTransparency = 1 }):Play() end
+		if Frame2 then TweenService:Create(Frame2, TweenInfo.new(0.25), { BackgroundTransparency = 1 }):Play() end
+		if Bar then TweenService:Create(Bar, TweenInfo.new(0.25), { BackgroundTransparency = 1 }):Play() end
+		if Title then TweenService:Create(Title, TweenInfo.new(0.2), { TextTransparency = 1 }):Play() end
+		if Text then TweenService:Create(Text, TweenInfo.new(0.2), { TextTransparency = 1 }):Play() end
 		fadeFrame:Play()
 		fadeFrame.Completed:Wait()
 		Clone:Destroy()
 	end)
 end
+
 return {
 	Notify = Notify
 }
