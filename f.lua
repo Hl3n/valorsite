@@ -87,7 +87,7 @@ Converted["_title"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 Converted["_title"].BorderSizePixel = 0
 Converted["_title"].Position = UDim2.new(0.5, 0, 0.147887319, 0)
 Converted["_title"].Size = UDim2.new(0.986486495, 0, 0.295774639, 0)
-Converted["_title"].Name = "title"
+Converted["_title"].Name = "Title"
 Converted["_title"].Parent = Converted["_Frame2"]
 
 Converted["_UIPadding"].PaddingLeft = UDim.new(0, 4)
@@ -116,9 +116,8 @@ Converted["_text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 Converted["_text"].BorderSizePixel = 0
 Converted["_text"].Position = UDim2.new(0.5, 0, 0.696478903, 0)
 Converted["_text"].Size = UDim2.new(0.983108103, 0, 0.549295783, 0)
-Converted["_text"].Name = "text"
+Converted["_text"].Name = "Desc"
 Converted["_text"].Parent = Converted["_Frame2"]
-
 Converted["_UIPadding1"].PaddingLeft = UDim.new(0, 4)
 Converted["_UIPadding1"].Parent = Converted["_text"]
 
