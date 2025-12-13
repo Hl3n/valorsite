@@ -3,6 +3,7 @@
     { "source": "/valor", "destination": "/redirects/valor.lua" },
     { "source": "/wm", "destination": "/redirects/wm.lua" },
     {"source": "/loader", "destination": "/redirects/loader.lua"},
-    {"source": "/autofarm", "destination": "/redirects/autofarm.lua"}
+    {"source": "/autofarm", "destination": "/redirects/autofarm.lua"},
+    {"source": "/valorv2", "destination": "/redirects/valorv2.lua"},
   ]
 }
